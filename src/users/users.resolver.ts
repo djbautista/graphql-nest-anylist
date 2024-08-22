@@ -1,26 +1,58 @@
-import { Resolver, Query, Mutation, Args, Int, ID } from '@nestjs/graphql';
-import { UsersService } from './users.service';
+import { UserParamDecorator } from 'src/auth/decorators/userParam.decorator';
+import { JwtAuthGuard } from 'src/auth/guards/jwt.auth.guard';
+import { Role } from 'src/auth/model/role';
+import { UserArgs } from 'src/users/dto/args/user.args';
+
+import { ParseUUIDPipe, UseGuards } from '@nestjs/common';
+import { Args, ID, Mutation, Query, Resolver } from '@nestjs/graphql';
+
 import { User } from './entities/user.entity';
-import { CreateUserInput } from './dto/create-user.input';
-import { UpdateUserInput } from './dto/update-user.input';
+import { UsersService } from './users.service';
+import { UpdateSelfInput, UpdateUserInput } from 'src/users/dto/inputs';
 
 @Resolver(() => User)
+@UseGuards(JwtAuthGuard)
 export class UsersResolver {
   constructor(private readonly usersService: UsersService) {}
 
   @Query(() => [User], { name: 'users' })
-  async findAll(): Promise<User[]> {
-    return this.usersService.findAll();
+  async findAll(
+    @Args() args: UserArgs,
+    @UserParamDecorator([Role.admin]) _,
+  ): Promise<User[]> {
+    console.log({ args });
+    return this.usersService.findAll(args);
   }
 
   @Query(() => User, { name: 'user' })
-  findOne(@Args('id', { type: () => ID }) id: string): Promise<User> {
-    throw new Error('Method not implemented.');
-    // return this.usersService.findOne(id);
+  findOne(
+    @Args('id', { type: () => ID }, ParseUUIDPipe) id: string,
+    @UserParamDecorator([Role.admin]) _,
+  ): Promise<User> {
+    return this.usersService.findOneById(id);
   }
 
-  @Mutation(() => User)
-  banOne(@Args('id', { type: () => ID }) id: string) {
-    return this.usersService.ban(id);
+  @Mutation(() => User, { name: 'updateUser' })
+  update(
+    @Args('userInput') updateUserInput: UpdateUserInput,
+    @UserParamDecorator([Role.admin]) admin: User,
+  ) {
+    return this.usersService.update(updateUserInput, admin);
+  }
+
+  @Mutation(() => User, { name: 'updateSelf' })
+  updateSelf(
+    @Args('selfInput') updateUserInput: UpdateSelfInput,
+    @UserParamDecorator() user: User,
+  ) {
+    return this.usersService.update({ ...updateUserInput, id: user.id }, user);
+  }
+
+  @Mutation(() => User, { name: 'banUser' })
+  banUser(
+    @Args('id', { type: () => ID }, ParseUUIDPipe) id: string,
+    @UserParamDecorator([Role.admin]) user: User,
+  ) {
+    return this.usersService.ban(id, user);
   }
 }

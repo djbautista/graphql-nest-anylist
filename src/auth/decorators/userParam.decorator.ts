@@ -20,7 +20,7 @@ export const UserParamDecorator = createParamDecorator(
 
     if (!roles.length) return user;
 
-    const forbidden = roles.some((role) => !user.roles.includes(role));
+    const forbidden = roles.some((role) => !user.roles.includes(role.toString()));
 
     if (forbidden) {
       throw new ForbiddenException('Forbidden');
