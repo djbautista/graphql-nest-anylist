@@ -8,21 +8,19 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ApolloServerPluginLandingPageLocalDefault } from 'apollo-server-core';
 
 import { ItemsModule } from './items/items.module';
-
+import { UsersModule } from './users/users.module';
+import { AuthModule } from './auth/auth.module';
 
 @Module({
   imports: [
-
     ConfigModule.forRoot(),
 
     GraphQLModule.forRoot<ApolloDriverConfig>({
       driver: ApolloDriver,
       // debug: false,
       playground: false,
-      autoSchemaFile: join( process.cwd(), 'src/schema.gql'), 
-      plugins: [
-        ApolloServerPluginLandingPageLocalDefault
-      ]
+      autoSchemaFile: join(process.cwd(), 'src/schema.gql'),
+      plugins: [ApolloServerPluginLandingPageLocalDefault],
     }),
 
     TypeOrmModule.forRoot({
@@ -37,6 +35,8 @@ import { ItemsModule } from './items/items.module';
     }),
 
     ItemsModule,
+    UsersModule,
+    AuthModule,
   ],
   controllers: [],
   providers: [],
