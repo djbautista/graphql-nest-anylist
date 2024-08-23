@@ -40,9 +40,10 @@ export class SeedService {
   }
 
   private async seedUsers() {
-    const users = SEED_USERS.map(
-      async (user) => await this.usersService.create(user),
-    );
+    const users = SEED_USERS.map(async (user) => {
+      console.log({ user });
+      return await this.usersService.create(user);
+    });
 
     return await Promise.all(users);
   }

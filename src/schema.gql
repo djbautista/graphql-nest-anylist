@@ -16,8 +16,8 @@ type User {
   roles: [String!]!
   isActive: Boolean!
   lastModifiedBy: User
-  items: [Item!]!
   itemsCount: Int!
+  items(offset: Int = 0, limit: Int = 10, search: String): [Item!]!
 }
 
 type AuthResponse {
@@ -26,9 +26,9 @@ type AuthResponse {
 }
 
 type Query {
-  items: [Item!]!
+  items(offset: Int = 0, limit: Int = 10, search: String): [Item!]!
   item(id: ID!): Item!
-  users(roles: [UserRole!] = []): [User!]!
+  users(roles: [UserRole!] = [], offset: Int = 0, limit: Int = 10, search: String): [User!]!
   user(id: ID!): User!
   revalidate: AuthResponse!
 }

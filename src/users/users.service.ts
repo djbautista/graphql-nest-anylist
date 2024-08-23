@@ -13,6 +13,7 @@ import {
 import { InjectRepository } from '@nestjs/typeorm';
 import { UserArgs } from 'src/users/dto/args/user.args';
 import { UpdateUserInput } from 'src/users/dto/inputs';
+import { PaginationArgs, SearchArgs } from '@/common/dto/args';
 
 @Injectable()
 export class UsersService {
@@ -47,14 +48,33 @@ export class UsersService {
     }
   }
 
-  async findAll(args: UserArgs): Promise<User[]> {
-    if (!args.roles.length) return await this.usersRepository.find();
+  async findAll(
+    args: UserArgs,
+    paginationArgs: PaginationArgs,
+    searchArgs: SearchArgs,
+  ): Promise<User[]> {
+    const { offset, limit } = paginationArgs;
+    const { search } = searchArgs;
+    const { roles } = args;
 
-    return await this.usersRepository
+    const queryBuilder = this.usersRepository
       .createQueryBuilder()
-      .where('ARRAY[roles] && ARRAY[:...roles]')
-      .setParameters({ roles: args.roles })
-      .getMany();
+      .take(limit)
+      .skip(offset);
+
+    if (roles?.length) {
+      queryBuilder
+        .andWhere('ARRAY[roles] && ARRAY[:...roles]')
+        .setParameters({ roles });
+    }
+
+    if (search) {
+      queryBuilder.andWhere('LOWER("fullName") like :search', {
+        search: `%${search.toLowerCase()}%`,
+      });
+    }
+
+    return queryBuilder.getMany();
   }
 
   async findOneByEmail(email: string): Promise<User> {
@@ -73,8 +93,10 @@ export class UsersService {
     }
   }
 
-  async update(updateUserInput: UpdateUserInput, modifiedBy: User): Promise<User> {
-
+  async update(
+    updateUserInput: UpdateUserInput,
+    modifiedBy: User,
+  ): Promise<User> {
     const user = await this.usersRepository.preload(updateUserInput);
 
     if (!user) {
