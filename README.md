@@ -1,26 +1,31 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
-
 # Dev
 
-1. Clonar el proyecto
-2. Copiar el ```env.template``` y renombar a ```.env```
-3. Ejecutar
+1. Clone project
+
+2. Copy `env.template` and rename it to `.env`
+3. Set the environment variables in the `.env` file
+4. Run install command
+
 ```
-yarn install
+npm ci
 ```
-4. Levantar la imagen (Docker desktop)
+
+4. (Docker desktop) Start the docker containers
+
 ```
 docker-compose up -d
 ```
 
-5. Levantar el backend de Nest
+5. Run the development server
+
 ```
 yarn start:dev
 ```
 
-6. Visiar el sitio
+6. Go to the graphql playground
+
 ```
 localhost:3000/graphql
 ```
+
+7. Execute the seed mutation to create the initial data

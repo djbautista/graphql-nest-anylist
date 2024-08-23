@@ -33,7 +33,6 @@ export class UsersResolver {
     @Args() args: UserArgs,
     @UserParamDecorator([Role.admin]) _,
   ): Promise<User[]> {
-    console.log({ args });
     return this.usersService.findAll(args);
   }
 

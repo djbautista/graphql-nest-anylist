@@ -47,6 +47,7 @@ type Mutation {
   banUser(id: ID!): User!
   signUp(signUpInput: SignUpInput!): AuthResponse!
   signIn(signInInput: SignInInput!): AuthResponse!
+  seed: String!
 }
 
 input CreateItemInput {
