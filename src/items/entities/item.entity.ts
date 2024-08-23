@@ -1,27 +1,33 @@
-import { ObjectType, Field, ID, Float } from '@nestjs/graphql';
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { User } from '@/users/entities/user.entity';
+import { Field, Float, ID, ObjectType } from '@nestjs/graphql';
+import {
+  Column,
+  Entity,
+  Index,
+  ManyToOne,
+  PrimaryGeneratedColumn,
+} from 'typeorm';
 
 @Entity({ name: 'items' })
 @ObjectType()
 export class Item {
-  
   @PrimaryGeneratedColumn('uuid')
-  @Field( () => ID )
+  @Field(() => ID)
   id: string;
 
   @Column()
-  @Field( () => String )
+  @Field(() => String)
   name: string;
 
   @Column()
-  @Field( () => Float )
+  @Field(() => Float)
   quantity: number;
 
   @Column({ nullable: true })
-  @Field( () => String, { nullable: true } )
+  @Field(() => String, { nullable: true })
   quantityUnits?: string; // g, ml, kg, tsp
 
-  // stores
-  // user
-
+  @ManyToOne(() => User, (user) => user.items, { nullable: false })
+  @Index('item_user_id_index')
+  user: User;
 }
