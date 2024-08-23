@@ -22,6 +22,150 @@ export const SEED_USERS = [
   },
 ];
 
+export const SEED_LISTS = [
+  {
+    name: 'Grocery list',
+  },
+  {
+    name: 'To do list',
+  },
+  {
+    name: 'Wish list',
+  },
+  {
+    name: 'Shopping list',
+  },
+  {
+    name: 'Packing list',
+  },
+  {
+    name: 'Guest list',
+  },
+  {
+    name: 'Bucket list',
+  },
+  {
+    name: 'Reading list',
+  },
+  {
+    name: 'Contact list',
+  },
+  {
+    name: 'Christmas list',
+  },
+  {
+    name: 'Checklist',
+  },
+  {
+    name: 'Honey do list',
+  },
+  {
+    name: 'Chore list',
+  },
+  {
+    name: 'Project list',
+  },
+  {
+    name: 'Task list',
+  },
+  {
+    name: 'To buy list',
+  },
+  {
+    name: 'To watch list',
+  },
+  {
+    name: 'To read list',
+  },
+  {
+    name: 'To listen list',
+  },
+  {
+    name: 'To eat list',
+  },
+  {
+    name: 'To cook list',
+  },
+  {
+    name: 'To visit list',
+  },
+  {
+    name: 'To learn list',
+  },
+  {
+    name: 'To play list',
+  },
+  {
+    name: 'To clean list',
+  },
+  {
+    name: 'To fix list',
+  },
+  {
+    name: 'To make list',
+  },
+  {
+    name: 'To sell list',
+  },
+  {
+    name: 'To donate list',
+  },
+  {
+    name: 'To recycle list',
+  },
+  {
+    name: 'To plant list',
+  },
+  {
+    name: 'To watch list',
+  },
+  {
+    name: 'To read list',
+  },
+  {
+    name: 'To listen list',
+  },
+  {
+    name: 'To eat list',
+  },
+  {
+    name: 'To cook list',
+  },
+  {
+    name: 'To visit list',
+  },
+  {
+    name: 'To learn list',
+  },
+  {
+    name: 'To play list',
+  },
+  {
+    name: 'To clean list',
+  },
+  {
+    name: 'To fix list',
+  },
+  {
+    name: 'To make list',
+  },
+  {
+    name: 'To sell list',
+  },
+  {
+    name: 'To donate list',
+  },
+  {
+    name: 'To recycle list',
+  },
+  {
+    name: 'To plant list',
+  },
+  {
+    name: 'To watch list',
+  },
+];
+
 export const SEED_ITEMS = [
   {
     name: 'Chicken breast (skinless,boneless)',

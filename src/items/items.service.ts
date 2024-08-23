@@ -21,8 +21,8 @@ export class ItemsService {
 
   async findAll(
     user: User,
-    paginationArgs: PaginationArgs,
-    searchArgs: SearchArgs,
+    paginationArgs: PaginationArgs = { offset: 0, limit: 10 },
+    searchArgs: SearchArgs = { search: null },
   ): Promise<Item[]> {
     const { offset, limit } = paginationArgs;
     const { search } = searchArgs;
