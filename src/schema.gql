@@ -2,13 +2,6 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Item {
-  id: ID!
-  name: String!
-  quantity: Float!
-  quantityUnits: String
-}
-
 type User {
   id: ID!
   fullName: String!
@@ -23,12 +16,19 @@ type AuthResponse {
   user: User!
 }
 
+type Item {
+  id: ID!
+  name: String!
+  quantity: Float!
+  quantityUnits: String
+}
+
 type Query {
-  revalidate: AuthResponse!
-  users(roles: [UserRole!] = []): [User!]!
-  user(id: ID!): User!
   items: [Item!]!
   item(id: ID!): Item!
+  users(roles: [UserRole!] = []): [User!]!
+  user(id: ID!): User!
+  revalidate: AuthResponse!
 }
 
 enum UserRole {
@@ -37,25 +37,27 @@ enum UserRole {
 }
 
 type Mutation {
-  signUp(signUpInput: SignUpInput!): AuthResponse!
-  signIn(signInInput: SignInInput!): AuthResponse!
-  updateUser(userInput: UpdateUserInput!): User!
-  updateSelf(selfInput: UpdateSelfInput!): User!
-  banUser(id: ID!): User!
   createItem(createItemInput: CreateItemInput!): Item!
   updateItem(updateItemInput: UpdateItemInput!): Item!
   removeItem(id: ID!): Item!
+  updateUser(userInput: UpdateUserInput!): User!
+  updateSelf(selfInput: UpdateSelfInput!): User!
+  banUser(id: ID!): User!
+  signUp(signUpInput: SignUpInput!): AuthResponse!
+  signIn(signInInput: SignInInput!): AuthResponse!
 }
 
-input SignUpInput {
-  email: String!
-  fullName: String!
-  password: String!
+input CreateItemInput {
+  name: String!
+  quantity: Float!
+  quantityUnits: String
 }
 
-input SignInInput {
-  email: String!
-  password: String!
+input UpdateItemInput {
+  name: String
+  quantity: Float
+  quantityUnits: String
+  id: ID!
 }
 
 input UpdateUserInput {
@@ -75,15 +77,13 @@ input UpdateSelfInput {
   isActive: Boolean
 }
 
-input CreateItemInput {
-  name: String!
-  quantity: Float!
-  quantityUnits: String
+input SignUpInput {
+  email: String!
+  fullName: String!
+  password: String!
 }
 
-input UpdateItemInput {
-  name: String
-  quantity: Float
-  quantityUnits: String
-  id: ID!
+input SignInInput {
+  email: String!
+  password: String!
 }
